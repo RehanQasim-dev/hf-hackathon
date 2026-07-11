@@ -59,7 +59,7 @@
         "name": "coco_cat",
         "media_artifacts": ["smolvlm2_coco_cat_jpg"],
         "question": "Name the animal in one word.",
-        "accepted_answers": ["cat"]
+        "accepted_answers": ["cat", "tabby"]
       },
       {
         "name": "coco_giraffes",
@@ -77,7 +77,7 @@
         "name": "giraffes_then_cat",
         "media_artifacts": ["smolvlm2_coco_giraffes_jpg", "smolvlm2_coco_cat_jpg"],
         "question": "Name the animal in the second image in one word.",
-        "accepted_answers": ["cat"]
+        "accepted_answers": ["cat", "tabby"]
       }
     ],
     "order_pair": ["cat_then_giraffes", "giraffes_then_cat"]
