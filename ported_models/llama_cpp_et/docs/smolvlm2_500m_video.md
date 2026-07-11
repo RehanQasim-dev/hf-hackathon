@@ -9,7 +9,7 @@ baseline, not a fully optimized vision implementation.
 - Hugging Face model: `HuggingFaceTB/SmolVLM2-500M-Video-Instruct`
 - Revision: `7b375e1b73b11138ff12fe22c8f2822d8fe03467`
 - Quantization: Q8_0 model and Q8_0 multimodal projector
-- Runtime revision: `13da97147c0c8c04f0df410e77c8d202cebee3fb`
+- Runtime revision: `cc4049d86b14e4ef72f827f3bb767b577f18fbcd`
 - Full hashes and public fixtures: `.github/ci/reference/smolvlm2_500m_video.json`
 
 The canonical GGUF files are pinned from
@@ -42,9 +42,9 @@ ET-SoC1 answer to match it and the fixed accepted-answer set. Reversing the
 images must change the answer to the animal in the new second image.
 
 The log must also report the vision encoder on ET and all language-model layers
-offloaded. This baseline currently falls back to CPU for the vision `IM2COL`,
-`NORM`, and `UNARY` operators. CI records that set and rejects new, undeclared
-fallback operators.
+offloaded. The ET backend implements the vision graph's 2D `IM2COL`, LayerNorm
+(`NORM`), and GELU (`UNARY`) operations. CI rejects the run if the CLIP graph
+reports any CPU fallback operation.
 
 ## Performance
 

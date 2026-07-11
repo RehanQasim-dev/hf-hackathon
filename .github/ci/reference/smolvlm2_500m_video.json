@@ -91,7 +91,8 @@
       "Reversing the two images changes the answer to the animal in the new second image.",
       "The server log reports the CLIP vision encoder on ET and full LLM layer offload."
     ],
-    "allowed_vision_fallback_ops": ["IM2COL", "NORM", "UNARY"]
+    "require_zero_vision_fallbacks": true,
+    "allowed_vision_fallback_ops": []
   },
   "performance": {
     "metric": "real_time_factor",

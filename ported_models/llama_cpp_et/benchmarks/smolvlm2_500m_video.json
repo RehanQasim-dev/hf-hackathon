@@ -38,7 +38,8 @@
     "temperature": 0,
     "top_k": 1,
     "require_full_offload": true,
-    "allowed_vision_fallback_ops": ["IM2COL", "NORM", "UNARY"]
+    "require_zero_vision_fallbacks": true,
+    "allowed_vision_fallback_ops": []
   },
   "multimodal": {
     "frames_per_second": 1.0,

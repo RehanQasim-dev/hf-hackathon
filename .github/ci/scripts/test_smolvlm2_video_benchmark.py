@@ -29,6 +29,10 @@ class SmolVLM2VideoBenchmarkTests(unittest.TestCase):
         failures = benchmark.log_failures(log, mode="board", request_count=1, allowed_ops={"NORM"})
         self.assertIn("board: unexpected vision fallback ops: IM2COL", failures)
 
+        strict_log = log + "\nwarmup: WARNING: the CLIP graph uses unsupported operators by the backend\n"
+        strict_failures = benchmark.log_failures(strict_log, mode="board", request_count=1, allowed_ops=set())
+        self.assertIn("board: vision graph contains CPU fallback operations", strict_failures)
+
     def test_correctness_requires_host_agreement_and_image_order(self) -> None:
         cases = [
             ({"name": "forward", "accepted_answers": ["giraffe"]}, [Path("cat"), Path("giraffe")]),

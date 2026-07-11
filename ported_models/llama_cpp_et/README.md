@@ -8,7 +8,7 @@ submodule, mirrored from:
 
 - `https://github.com/aifoundry-org/llama.cpp.git`
 - branch `et`
-- revision `13da97147c0c8c04f0df410e77c8d202cebee3fb`
+- revision `cc4049d86b14e4ef72f827f3bb767b577f18fbcd`
 
 **CI builds llama.cpp from the committed submodule.** A reviewer reading a PR
 can see exactly which framework version will run on the board. To change it,

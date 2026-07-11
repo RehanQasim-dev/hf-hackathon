@@ -64,6 +64,8 @@ def log_failures(log: str, *, mode: str, request_count: int, allowed_ops: set[st
         failures.append(f"board: expected full LLM offload, got {match.group(1)}/{match.group(2)}")
 
     observed_ops = unsupported_vision_ops(log)
+    if not allowed_ops and "CLIP graph uses unsupported operators" in log:
+        failures.append("board: vision graph contains CPU fallback operations")
     unexpected = observed_ops - allowed_ops
     if unexpected:
         failures.append("board: unexpected vision fallback ops: " + ", ".join(sorted(unexpected)))
@@ -269,6 +271,9 @@ def validate_contract(
     allowed_ops = [str(value) for value in mcfg["llama_server"].get("allowed_vision_fallback_ops", [])]
     if allowed_ops != contract["correctness"]["allowed_vision_fallback_ops"]:
         raise ValueError("allowed vision fallback ops differ from the protected contract")
+    require_zero_fallbacks = mcfg["llama_server"].get("require_zero_vision_fallbacks")
+    if require_zero_fallbacks is not True or contract["correctness"].get("require_zero_vision_fallbacks") is not True:
+        raise ValueError("zero vision fallback requirement is not enabled")
     if float(multimodal.get("frames_per_second", 0)) != float(input_contract["frames_per_second"]):
         raise ValueError("frames_per_second differs from the protected contract")
     for key in ("prompt_template", "cases", "order_pair"):

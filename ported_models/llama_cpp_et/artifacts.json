@@ -10,9 +10,9 @@
         "type": "git",
         "url": "https://github.com/aifoundry-org/llama.cpp.git",
         "branch": "et",
-        "revision": "13da97147c0c8c04f0df410e77c8d202cebee3fb",
-        "upstream_pr": "https://github.com/aifoundry-org/llama.cpp/pull/7",
-        "upstream_author": "marty1885",
+        "revision": "cc4049d86b14e4ef72f827f3bb767b577f18fbcd",
+        "upstream_pr": "https://github.com/aifoundry-org/llama.cpp/pull/10",
+        "upstream_author": "AFOliveira",
         "note": "Informational only: this records where the committed submodule mirrors from. CI builds from the committed submodule_path; it does not clone from this URL. To change the framework version, bump the submodule pin in a PR (see ported_models/llama_cpp_et/src/README.md)."
       },
       "note": "Framework source comes from the committed submodule. Submitters who want a different framework version must repin the submodule as part of their PR."
