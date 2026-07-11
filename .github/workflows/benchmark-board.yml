@@ -124,6 +124,7 @@ jobs:
               .github/workflows/*|\
               .github/ci/reference/llama32_1b.json|\
               .github/ci/reference/rwkv7_15b.json|\
+              .github/ci/reference/smolvlm2_500m_video.json|\
               .github/ci/reference/yolo.json|\
               .github/ci/platform/deploy/*|\
               .github/ci/scripts/benchmark_config_helpers.py|\
@@ -137,6 +138,7 @@ jobs:
               .github/ci/scripts/refresh_trusted_llama32_prs.sh|\
               .github/ci/scripts/refresh_trusted_yolo_prs.sh|\
               .github/ci/scripts/run_llama_server_benchmark.py|\
+              .github/ci/scripts/run_smolvlm2_video_benchmark.py|\
               .github/ci/scripts/run_model_benchmark.sh|\
               .github/ci/scripts/run_trusted_llama_benchmark.py|\
               .github/ci/scripts/run_trusted_llama32_candidate.sh|\
@@ -146,6 +148,7 @@ jobs:
               .github/ci/scripts/trusted_llama32_input_hash.sh|\
               .github/ci/scripts/trusted_yolo_input_hash.sh|\
               scripts/run_sysemu_model_ports.sh|\
+              ported_models/llama_cpp_et/benchmarks/smolvlm2_500m_video.json|\
               ported_models/yolo/tools/host_reference.py|\
               ported_models/yolo/assets/yolo/coco_*_raw_480x640x3_uint8_rgb.bin)
                 blocked+=("$path")

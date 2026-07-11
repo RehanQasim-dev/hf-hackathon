@@ -396,6 +396,59 @@
       "sha256": "7e943f7c53f0382a6fc41b6ee0c2def63ba4fded9ab8ed039cc9e2ab905e0edd",
       "size_bytes": 103769856,
       "note": "SmolVLM 256M vision projector (SigLIP ~93M + MLP). Q8_0 quantized. Must be loaded alongside smolvlm_256m_q8_gguf."
+    },
+    "smolvlm2_500m_video_q8_gguf": {
+      "kind": "model",
+      "framework": "llama.cpp-et",
+      "variant": "SmolVLM2-500M-Video-Instruct-Q8_0",
+      "filename": "SmolVLM2-500M-Video-Instruct-Q8_0.gguf",
+      "env": "SMOLVLM2_500M_VIDEO_MODEL_PATH",
+      "source": {
+        "type": "huggingface",
+        "repo": "ggml-org/SmolVLM2-500M-Video-Instruct-GGUF",
+        "revision": "ccd7aae53bcb1997355c2f094959e72b3642ce17",
+        "filename": "SmolVLM2-500M-Video-Instruct-Q8_0.gguf",
+        "url": "https://huggingface.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF/resolve/ccd7aae53bcb1997355c2f094959e72b3642ce17/SmolVLM2-500M-Video-Instruct-Q8_0.gguf"
+      },
+      "local_cache": "local-artifacts/models/smolvlm2_500m_video/SmolVLM2-500M-Video-Instruct-Q8_0.gguf",
+      "sha256": "6f67b8036b2469fcd71728702720c6b51aebd759b78137a8120733b4d66438bc",
+      "size_bytes": 436808704,
+      "note": "Pinned Q8_0 conversion of HuggingFaceTB/SmolVLM2-500M-Video-Instruct; source lineage is fixed by the reference contract."
+    },
+    "smolvlm2_500m_video_mmproj_q8": {
+      "kind": "model",
+      "framework": "llama.cpp-et",
+      "variant": "SmolVLM2-500M-Video-mmproj-Q8_0",
+      "filename": "mmproj-SmolVLM2-500M-Video-Instruct-Q8_0.gguf",
+      "env": "SMOLVLM2_500M_VIDEO_MMPROJ_PATH",
+      "source": {
+        "type": "huggingface",
+        "repo": "ggml-org/SmolVLM2-500M-Video-Instruct-GGUF",
+        "revision": "ccd7aae53bcb1997355c2f094959e72b3642ce17",
+        "filename": "mmproj-SmolVLM2-500M-Video-Instruct-Q8_0.gguf",
+        "url": "https://huggingface.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF/resolve/ccd7aae53bcb1997355c2f094959e72b3642ce17/mmproj-SmolVLM2-500M-Video-Instruct-Q8_0.gguf"
+      },
+      "local_cache": "local-artifacts/models/smolvlm2_500m_video/mmproj-SmolVLM2-500M-Video-Instruct-Q8_0.gguf",
+      "sha256": "921dc7e259f308e5b027111fa185efcbf33db13f6e35749ddf7f5cdb60ef520b",
+      "size_bytes": 108785184
+    },
+    "smolvlm2_coco_cat_jpg": {
+      "kind": "fixture",
+      "filename": "000000524280.jpg",
+      "env": "SMOLVLM2_COCO_CAT_PATH",
+      "source_url": "http://images.cocodataset.org/val2017/000000524280.jpg",
+      "local_cache": "local-artifacts/fixtures/smolvlm2/000000524280.jpg",
+      "sha256": "3b83ffd2d2ce4c28a05b1dcd486edf8a06542584a05c9a66cf208df9ed6e2c7d",
+      "size_bytes": 165314
+    },
+    "smolvlm2_coco_giraffes_jpg": {
+      "kind": "fixture",
+      "filename": "000000296969.jpg",
+      "env": "SMOLVLM2_COCO_GIRAFFES_PATH",
+      "source_url": "http://images.cocodataset.org/val2017/000000296969.jpg",
+      "local_cache": "local-artifacts/fixtures/smolvlm2/000000296969.jpg",
+      "sha256": "1032b203f4b7faf2ea0268dddc1d9568e7ad8cbc39eb077b62ecf7b171bf90ff",
+      "size_bytes": 282714
     }
   }
 }

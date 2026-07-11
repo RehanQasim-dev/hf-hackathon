@@ -1,0 +1,74 @@
+{
+  "runner": "smolvlm2_video",
+  "board": true,
+  "benchmark_default": true,
+  "framework": {
+    "name": "llama.cpp-et",
+    "runner": "smolvlm2_video",
+    "source_artifact": "llama_cpp_source"
+  },
+  "artifacts_file": "../artifacts.json",
+  "reference_contract": ".github/ci/reference/smolvlm2_500m_video.json",
+  "canonical_variant": "SmolVLM2-500M-Video-Instruct-Q8_0",
+  "score": {
+    "metric": "real_time_factor",
+    "label": "Video real-time factor",
+    "higher_is_better": false,
+    "baseline_variant": "SmolVLM2-500M-Video-Instruct-Q8_0"
+  },
+  "llama_server": {
+    "source_artifact": "llama_cpp_source",
+    "model_artifact": "smolvlm2_500m_video_q8_gguf",
+    "mmproj_artifact": "smolvlm2_500m_video_mmproj_q8",
+    "server_artifact": "llama_server",
+    "workdir_artifact": "llama_cpp_build",
+    "host": "127.0.0.1",
+    "port": 18107,
+    "device": "ET",
+    "gpu_layers": 99,
+    "ctx_size": 2048,
+    "batch_size": 256,
+    "ubatch_size": 128,
+    "parallel": 1,
+    "cache_ram_mib": 0,
+    "ready_timeout_s": 180,
+    "request_timeout_s": 240,
+    "flash_attn": false,
+    "max_tokens": 8,
+    "temperature": 0,
+    "top_k": 1,
+    "require_full_offload": true,
+    "allowed_vision_fallback_ops": ["IM2COL", "NORM", "UNARY"]
+  },
+  "multimodal": {
+    "frames_per_second": 1.0,
+    "prompt_template": "<|im_start|>User: {media_markers}\n{question}<end_of_utterance>\nAssistant:",
+    "cases": [
+      {
+        "name": "coco_cat",
+        "media_artifacts": ["smolvlm2_coco_cat_jpg"],
+        "question": "Name the animal in one word.",
+        "accepted_answers": ["cat"]
+      },
+      {
+        "name": "coco_giraffes",
+        "media_artifacts": ["smolvlm2_coco_giraffes_jpg"],
+        "question": "Name the animal in one word.",
+        "accepted_answers": ["giraffe", "giraffes"]
+      },
+      {
+        "name": "cat_then_giraffes",
+        "media_artifacts": ["smolvlm2_coco_cat_jpg", "smolvlm2_coco_giraffes_jpg"],
+        "question": "Name the animal in the second image in one word.",
+        "accepted_answers": ["giraffe", "giraffes"]
+      },
+      {
+        "name": "giraffes_then_cat",
+        "media_artifacts": ["smolvlm2_coco_giraffes_jpg", "smolvlm2_coco_cat_jpg"],
+        "question": "Name the animal in the second image in one word.",
+        "accepted_answers": ["cat"]
+      }
+    ],
+    "order_pair": ["cat_then_giraffes", "giraffes_then_cat"]
+  }
+}

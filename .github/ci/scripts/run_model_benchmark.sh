@@ -59,6 +59,20 @@ print(model_runner(load_config(cfg_path), model))
 PY
 )"
 
+if [[ "$runner" == "smolvlm2_video" ]]; then
+  if [[ "$BENCHMARK_DEVICE" != "soc1sim" ]]; then
+    write_score skipped "${model} multimodal benchmark requires the ET-SoC1 board runner."
+    exit 0
+  fi
+
+  python3 "${REPO_ROOT}/.github/ci/scripts/run_smolvlm2_video_benchmark.py" \
+    --model "$model" \
+    --config "$BENCHMARK_CONFIG" \
+    --results-dir "${BENCHMARK_OUTPUT}/smolvlm2-${model}" \
+    --output "${BENCHMARK_OUTPUT}/score-${model}.json"
+  exit 0
+fi
+
 if [[ "$runner" == "llama_server" ]]; then
   if [[ "$BENCHMARK_DEVICE" != "soc1sim" ]]; then
     write_score skipped "${model} framework benchmark requires the ET-SoC1 board runner."

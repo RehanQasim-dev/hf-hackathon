@@ -42,6 +42,7 @@ GENERIC_BOARD_INFRA_PATHS = {
 
 RUNNER_INFRA_PATHS = {
     ".github/ci/scripts/run_llama_server_benchmark.py": "llama_server",
+    ".github/ci/scripts/run_smolvlm2_video_benchmark.py": "smolvlm2_video",
 }
 
 MODEL_CODE_SUFFIXES = {
@@ -78,6 +79,9 @@ YOLO_REFERENCE_INFRA_PATHS = {
     ".github/ci/scripts/run_yolo_host_reference.sh",
     ".github/ci/scripts/trusted_yolo_input_hash.sh",
     ".github/workflows/trusted-yolo-pr.yml",
+}
+SMOLVLM2_REFERENCE_INFRA_PATHS = {
+    ".github/ci/reference/smolvlm2_500m_video.json",
 }
 ZERO_BLOB_PRIMARY = "zero2m.bin"
 
@@ -190,6 +194,8 @@ def collect_artifact_refs(value: Any) -> set[str]:
                 continue
             if key.endswith("_artifact") and isinstance(nested, str):
                 refs.add(nested)
+            elif key.endswith("_artifacts") and isinstance(nested, list):
+                refs.update(str(item) for item in nested if isinstance(item, str))
             else:
                 refs.update(collect_artifact_refs(nested))
     elif isinstance(value, list):
@@ -654,6 +660,9 @@ def main() -> int:
             continue
         if path in YOLO_REFERENCE_INFRA_PATHS:
             selected.add("yolo")
+            continue
+        if path in SMOLVLM2_REFERENCE_INFRA_PATHS:
+            selected.add("smolvlm2_500m_video")
             continue
         if path in GENERIC_BOARD_INFRA_PATHS or is_under(path, ".github/ci/platform/"):
             if honor_global:

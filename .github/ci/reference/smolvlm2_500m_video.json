@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "model": {
+    "repo": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+    "revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+    "license": "apache-2.0",
+    "files": {
+      "model.safetensors": {
+        "sha256": "b9bfd456c9472c0acd5719d6e514c4b859891af205ee1a736552fd3497b8b0c3",
+        "size_bytes": 2029990624
+      },
+      "config.json": {
+        "sha256": "ea6bc1237e96247f6258de3e202e2e62b93d6f386dc47e7b36b5588bf3a15e17"
+      },
+      "preprocessor_config.json": {
+        "sha256": "149e315d9410368e5491455bb06e0f763426e9e56cca731c13b24404a29b6374"
+      },
+      "tokenizer.json": {
+        "sha256": "5ece781dc8d2b2f3e2f289ca0ae50b17cfc27dd27bfe7971bb8241e0b964331a"
+      },
+      "chat_template.json": {
+        "sha256": "b585e3598909a5687f9f9d738d35223724dedef256b9b274e1cbfb32b13c74bf"
+      }
+    }
+  },
+  "conversion": {
+    "tool": "ported_models/llama_cpp_et/src/llama.cpp-et/convert_hf_to_gguf.py",
+    "tool_revision": "13da97147c0c8c04f0df410e77c8d202cebee3fb",
+    "outtype": "q8_0",
+    "canonical_gguf_repo": "ggml-org/SmolVLM2-500M-Video-Instruct-GGUF",
+    "canonical_gguf_revision": "ccd7aae53bcb1997355c2f094959e72b3642ce17",
+    "artifacts": {
+      "SmolVLM2-500M-Video-Instruct-Q8_0.gguf": {
+        "sha256": "6f67b8036b2469fcd71728702720c6b51aebd759b78137a8120733b4d66438bc",
+        "size_bytes": 436808704
+      },
+      "mmproj-SmolVLM2-500M-Video-Instruct-Q8_0.gguf": {
+        "sha256": "921dc7e259f308e5b027111fa185efcbf33db13f6e35749ddf7f5cdb60ef520b",
+        "size_bytes": 108785184
+      }
+    }
+  },
+  "input_contract": {
+    "frames_per_second": 1.0,
+    "processor_image_size": 512,
+    "fixtures": {
+      "smolvlm2_coco_cat_jpg": {
+        "source": "http://images.cocodataset.org/val2017/000000524280.jpg",
+        "sha256": "3b83ffd2d2ce4c28a05b1dcd486edf8a06542584a05c9a66cf208df9ed6e2c7d"
+      },
+      "smolvlm2_coco_giraffes_jpg": {
+        "source": "http://images.cocodataset.org/val2017/000000296969.jpg",
+        "sha256": "1032b203f4b7faf2ea0268dddc1d9568e7ad8cbc39eb077b62ecf7b171bf90ff"
+      }
+    },
+    "prompt_template": "<|im_start|>User: {media_markers}\n{question}<end_of_utterance>\nAssistant:",
+    "cases": [
+      {
+        "name": "coco_cat",
+        "media_artifacts": ["smolvlm2_coco_cat_jpg"],
+        "question": "Name the animal in one word.",
+        "accepted_answers": ["cat"]
+      },
+      {
+        "name": "coco_giraffes",
+        "media_artifacts": ["smolvlm2_coco_giraffes_jpg"],
+        "question": "Name the animal in one word.",
+        "accepted_answers": ["giraffe", "giraffes"]
+      },
+      {
+        "name": "cat_then_giraffes",
+        "media_artifacts": ["smolvlm2_coco_cat_jpg", "smolvlm2_coco_giraffes_jpg"],
+        "question": "Name the animal in the second image in one word.",
+        "accepted_answers": ["giraffe", "giraffes"]
+      },
+      {
+        "name": "giraffes_then_cat",
+        "media_artifacts": ["smolvlm2_coco_giraffes_jpg", "smolvlm2_coco_cat_jpg"],
+        "question": "Name the animal in the second image in one word.",
+        "accepted_answers": ["cat"]
+      }
+    ],
+    "order_pair": ["cat_then_giraffes", "giraffes_then_cat"]
+  },
+  "correctness": {
+    "host_reference": "CPU execution of the exact pinned model and mmproj GGUF artifacts",
+    "answer_comparison": "lowercase alphanumeric tokens, exact match",
+    "requirements": [
+      "Each board answer equals its CPU reference answer.",
+      "Each normalized answer belongs to the case's fixed accepted-answer set.",
+      "Reversing the two images changes the answer to the animal in the new second image.",
+      "The server log reports the CLIP vision encoder on ET and full LLM layer offload."
+    ],
+    "allowed_vision_fallback_ops": ["IM2COL", "NORM", "UNARY"]
+  },
+  "performance": {
+    "metric": "real_time_factor",
+    "formula": "sum(board request wall time) / sum(input frame duration)",
+    "lower_is_better": true,
+    "included": [
+      "local request transfer",
+      "image decode and preprocessing",
+      "vision encoder and projector",
+      "language-model prompt evaluation",
+      "answer decoding"
+    ],
+    "excluded": ["artifact download", "build", "model load", "CPU reference pass"]
+  }
+}

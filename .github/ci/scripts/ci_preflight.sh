@@ -20,6 +20,8 @@ if ! python3 -m py_compile .github/ci/scripts/*.py; then
 fi
 python3 -m unittest discover -s .github/ci/scripts -p 'test_track_labels.py' \
   || bad "track label classifier tests failed"
+python3 -m unittest discover -s .github/ci/scripts -p 'test_smolvlm2_video_benchmark.py' \
+  || bad "SmolVLM2 video benchmark tests failed"
 python3 -m py_compile ported_models/yolo/tools/host_reference.py \
   || bad "YOLO host-reference compile errors"
 
